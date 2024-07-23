@@ -43,7 +43,7 @@ class ForgotPassowrdMail extends Mailable
 
     /**
      * Get the attachments for the message.
-     *
+     * to resert the passwords.
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
