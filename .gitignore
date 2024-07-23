@@ -1,0 +1,51 @@
+# Laravel-specific
+/vendor/
+/node_modules/
+/public/storage
+/storage/*.key
+.env
+.env.testing
+.phpunit.result.cache
+Homestead.yaml
+Homestead.json
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Log files
+*.log
+
+# Composer
+/composer.lock
+
+# NPM
+package-lock.json
+yarn.lock
+
+# Miscellaneous
+*.sqlite
+*.sqlite3
+*.cache
+*.tmp
+
+# Additional directories and files
+# Exclude documentation and license files in node_modules
+node_modules/*/LICENSE
+node_modules/*/README.md
+node_modules/*/README.md.bak
+node_modules/*/LICENSE.md
+
+# Exclude build artifacts
+node_modules/*/dist
+node_modules/*/bin
+node_modules/*/lib
+
+# Laravel debugging tools
+.phpstorm.meta.php
