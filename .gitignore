@@ -1,4 +1,9 @@
 # Laravel-specific
+composer.json
+config/
+package.json
+phpunit.xml
+vite.config.js
 /vendor/
 /node_modules/
 /public/storage
