@@ -10,13 +10,22 @@
         </a>
       </li>
 
+
       <li class="nav-item">
-        <a class="nav-link  @if(Request::segment(2) != 'category') collapsed  @endif" href="{{url('panel/category/list')}}">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Category</span>
+        <a class="nav-link  @if(Request::segment(2) != 'skills') collapsed  @endif" href="{{url('skills')}}">
+          <i class="bi bi-person-gear"></i>
+          <span>Skills</span>          
         </a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link  @if(Request::segment(2) != 'none') collapsed  @endif" href="{{url('')}}">
+          <i class="bi bi-door-open"></i>
+            <span>Opportunities</span>
+        </a>
+      </li>
+
+   
       <li class="nav-item">
         <a class="nav-link @if(Request::segment(2) != 'user') collapsed  @endif" href="{{url('panel/user/list')}}">
           <i class="bi bi-person"></i>
@@ -31,8 +40,16 @@
         </a>
       </li>
 
+
       <li class="nav-item">
-        <a class="nav-link  @if(Request::segment(2) != 'help') collapsed  @endif" href="{{url('panel/help/list')}}">
+        <a class="nav-link  @if(Request::segment(2) != 'category') collapsed  @endif" href="{{url('panel/category/list')}}">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Category</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link  @if(Request::segment(2) != 'help') collapsed  @endif" href="{{url('panel/user/help')}}">
           <i class="bi bi-question-circle"></i>
           <span>Help</span>
         </a>
@@ -50,7 +67,7 @@
       <li class="nav-item">
         <a class="nav-link  @if(Request::segment(2) != 'uploaded cv') collapsed  @endif" href="pages-error-404.html">
           <i class="bi bi-dash-circle"></i>
-          <span>Uploaded CV</span>
+          <span>Upload CV</span>
         </a>
       </li><!-- End Error 404 Page Nav -->
 
