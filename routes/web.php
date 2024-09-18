@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SkillController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
@@ -47,9 +48,13 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('panel/user/edit/{id}',[UserController::class, 'editUser']);
     Route::post('panel/user/edit/{id}',[UserController::class, 'updateUser']);
     Route::get('panel/user/delete/{id}',[UserController::class, 'deleteUser']);
-//url for category
+    Route::get('skills',[UserController::class,'userSkill']);
 
+ //profile url
+ Route::get('panel/user/profile',[UserController::class, 'profile']);
+ Route::get('panel/user/help',[UserController::class, 'help']);
 
+     //url for category
      Route::get('panel/category/list',[CategoryController::class, 'category']);
      Route::get('panel/category/add',[CategoryController::class, 'add_category']);
      Route::post('panel/category/add',[CategoryController::class, 'insert_category']);
@@ -68,4 +73,7 @@ Route::group(['middleware' => 'admin'], function(){
 
 
 });
+
+ 
+
 
