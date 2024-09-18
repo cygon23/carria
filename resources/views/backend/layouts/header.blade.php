@@ -169,7 +169,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile" style="padding: 0px">
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{url('panel/user/profile')}}">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -179,7 +179,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{url('panel/user/help')}}">
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
               </a>
