@@ -94,4 +94,21 @@ public function updateUser(Request $request, $id)
 
  }
 
+
+ public  function profile(){
+    return view('backend.user.profile');
+ }
+
+
+ public function help(){
+    return view ('backend.user.help');
+ }
+
+ public function userSkill(){
+    return view('backend.user.skills');
+}
+
+
+
+
 }
