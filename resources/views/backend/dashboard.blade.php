@@ -13,7 +13,7 @@
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{url('home')}}">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
@@ -44,14 +44,14 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Today</span></h5>
+                  <h5 class="card-title">Available posts <span>| Today</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-cart"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
+                      <h6>15</h6>
                       <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
 
                     </div>
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                  <h5 class="card-title">Traings <span>| This Month</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Customers <span>| This Year</span></h5>
+                  <h5 class="card-title">Skills on demand <span>| This Year</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -233,7 +233,7 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+                  <h5 class="card-title">Recent new market opportunities <span>| Today</span></h5>
 
                   <table class="table table-borderless datatable">
                     <thead>
