@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\SkillController;
+use App\Http\Controllers\profileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SkillController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashBoardController;
 
@@ -50,9 +52,6 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('panel/user/delete/{id}',[UserController::class, 'deleteUser']);
     Route::get('skills',[UserController::class,'userSkill']);
 
- //profile url
- Route::get('panel/user/profile',[UserController::class, 'profile']);
- Route::get('panel/user/help',[UserController::class, 'help']);
 
      //url for category
      Route::get('panel/category/list',[CategoryController::class, 'category']);
@@ -73,6 +72,27 @@ Route::group(['middleware' => 'admin'], function(){
 
 
 });
+
+  // Route::group(['middleware' => 'jobseekers'], function(){
+  //   Route::get('applicant/home', [Jobs])
+  // });
+
+  Route::group(['middleware' => 'companies'], function(){
+    Route::get('companies/companyHome', [CompanyController::class, 'index']);
+    Route::get('companies/job/create', [CompanyController::class, 'create']);
+    Route::get('companies/job/add', [CompanyController::class, 'add']);
+    Route::get('companies/job/delete', [CompanyController::class, 'delete']);
+});
+
+
+Route::group(['middleware'=>'jobseekers'], function(){
+       //profile url
+       Route::get('panel/user/profile',[profileController::class, 'profile']);
+       Route::post('panel/user/profile',[profileController::class, 'profileAdd']);
+       Route::post('panel/user/profile',[profileController::class, 'avator']);
+       Route::get('panel/user/help',[profileController::class, 'help']);
+});
+
 
  
 

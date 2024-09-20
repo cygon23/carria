@@ -12,6 +12,7 @@
 
 
       <li class="nav-item">
+        @if(Auth::user()->user_type == 'job_seeker')
         <a class="nav-link  @if(Request::segment(2) != 'skills') collapsed  @endif" href="{{url('skills')}}">
           <i class="bi bi-person-gear"></i>
           <span>Skills</span>          
@@ -25,13 +26,6 @@
         </a>
       </li>
 
-   
-      <li class="nav-item">
-        <a class="nav-link @if(Request::segment(2) != 'user') collapsed  @endif" href="{{url('panel/user/list')}}">
-          <i class="bi bi-person"></i>
-          <span>Users</span>
-        </a>
-      </li>
 
       <li class="nav-item">
         <a class="nav-link  @if(Request::segment(2) != 'blog') collapsed  @endif" href="{{url('panel/blog/list')}}">
@@ -69,8 +63,44 @@
           <i class="bi bi-dash-circle"></i>
           <span>Upload CV</span>
         </a>
-      </li><!-- End Error 404 Page Nav -->
+      </li>
 
+      @elseif (Auth::user()->user_type == 'company')
+
+      <li class="nav-item">
+        <a class="nav-link @if(Request::segment(2) != 'user') collapsed  @endif" href="{{url('')}}">
+          <i class="bi bi-person"></i>
+          <span>Users</span>
+        </a>
+      </li>
+
+
+
+      <li class="nav-item">
+        <a class="nav-link @if(Request::segment(2) != 'user') collapsed  @endif" href="{{url('panel/user/list')}}">
+          <i class="bi bi-briefcase"></i>
+          <span>Jobs</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('panel/user/create-job')}}">
+          <i class="bi bi-plus"></i>
+          <span>Create Job</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('panel/user/add-job')}}">
+          <i class="bi bi-file-earmark-plus"></i>
+          <span>Add Job</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('panel/user/delete-job')}}">
+          <i class="bi bi-trash"></i>
+          <span>Delete Job</span>
+        </a>
+      </li>
+@endif
     </ul>
 
   </aside><!-- End Sidebar-->
