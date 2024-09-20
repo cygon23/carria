@@ -104,12 +104,14 @@ class AuthController extends Controller
         $request->validate([
           'name' => 'required|min:6',
           'email' => 'required|email|unique:users',
+          'user_type' => 'required|in:job_seeker,company',
           'password' => 'required|string|min:8|max:20|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'
 
         ]);
         $save = new User;
         $save->name =trim($request->name);
         $save->email =trim($request->email);
+        $save->user_type = trim($request->user_type);
         $save->password = trim(Hash::make($request->password));
         // $save->terms = trim($request->terms);
         $save->remember_token = Str::random(40);
@@ -135,38 +137,90 @@ class AuthController extends Controller
         }
     }
 
+    // public function auth_login(Request $request)
+    // {
+    //       $remember = !empty($request->remember) ? true : false;
+    //     //to check if verify_email column
+    //       if(Auth::attempt(['email' => $request->email, 'password' => $request->password],$remember))
+    //       {
+    //           if(!empty(Auth::user()->email_verified_at))
+    //           {
+    //             //dashboard
+    //             return redirect('panel/dashboard');
+    //           }
+    //           else{
+    //             //storing 1st id
+    //             $user_id = Auth::user()->id;
+    //             Auth::logout();
+
+    //             $save = User::getSingle($user_id);
+    //             $save->remember_token = Str::random(40);
+    //             $save->save();
+
+
+    //             //send the verification email
+    //             Mail::to($save->email)->send(new RegisterMail($save));
+    //             return redirect()->back()->with('success','Check your email box to verify');
+
+    //           }
+    //       }
+    //       else{
+    //           return redirect()->back()->with('error','Please enter correct email and passowrd');
+    //       }
+
+    // }
+
     public function auth_login(Request $request)
+{
+    $remember = !empty($request->remember) ? true : false;
+
+    // Attempt login
+    if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) 
     {
-          $remember = !empty($request->remember) ? true : false;
-        //to check if verify_email column
-          if(Auth::attempt(['email' => $request->email, 'password' => $request->password],$remember))
-          {
-              if(!empty(Auth::user()->email_verified_at))
-              {
-                //dashboard
-                return redirect('panel/dashboard');
-              }
-              else{
-                //storing 1st id
-                $user_id = Auth::user()->id;
-                Auth::logout();
+        // Check if the user's email is verified
+        if (!empty(Auth::user()->email_verified_at)) 
+        {
+            // Redirect based on the user_type
+            $userType = Auth::user()->user_type;  // Assuming user_type column exists in the users table
 
-                $save = User::getSingle($user_id);
-                $save->remember_token = Str::random(40);
-                $save->save();
+            switch ($userType) {
+                case 'job_seeker':
+                    return redirect('panel/dashboard');  // Job Seeker's Dashboard
+                    break;
 
+                case 'company':
+                    return redirect('companies/companyHome');  // Company's Dashboard
+                    break;
 
-                //send the verification email
-                Mail::to($save->email)->send(new RegisterMail($save));
-                return redirect()->back()->with('success','Check your email box to verify');
+                case 'admin':
+                    return redirect('panel/dashboard');  // Admin's Dashboard
+                    break;
 
-              }
-          }
-          else{
-              return redirect()->back()->with('error','Please enter correct email and passowrd');
-          }
+                default:
+                    Auth::logout();  // Log the user out if user_type is invalid
+                    return redirect()->back()->with('error', 'Invalid user type');
+            }
 
+        } else {
+            // Handle email not verified
+            $user_id = Auth::user()->id;
+            Auth::logout();
+
+            $save = User::find($user_id);
+            $save->remember_token = Str::random(40);
+            $save->save();
+
+            // Send the verification email
+            Mail::to($save->email)->send(new RegisterMail($save));
+
+            return redirect()->back()->with('success', 'Check your email box to verify');
+        }
+    } 
+    else 
+    {
+        return redirect()->back()->with('error', 'Please enter the correct email and password');
     }
+}
 
     static function logout(){
         Auth::logout();
