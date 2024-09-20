@@ -91,6 +91,11 @@ Route::group(['middleware'=>'jobseekers'], function(){
        Route::post('panel/user/profile',[profileController::class, 'profileAdd']);
        Route::post('panel/user/profile',[profileController::class, 'avator']);
        Route::get('panel/user/help',[profileController::class, 'help']);
+
+       //cv url
+     
+       Route::get('job/cv',[profileController::class,'homeCv']);
+       Route::post('job/cv',[profileController::class,'uploadCv']);
 });
 
 

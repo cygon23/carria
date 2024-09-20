@@ -59,7 +59,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link  @if(Request::segment(2) != 'uploaded cv') collapsed  @endif" href="pages-error-404.html">
+        <a class="nav-link  @if(Request::segment(2) != 'cv') collapsed  @endif" href="{{url('job/cv')}}">
           <i class="bi bi-dash-circle"></i>
           <span>Upload CV</span>
         </a>

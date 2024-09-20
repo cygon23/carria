@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class profileController extends Controller
 {
@@ -84,4 +87,74 @@ class profileController extends Controller
     
         return redirect()->back()->with('profile_image_url', 'Avatar updated successfully.');
      }
+
+     public function homeCv(){
+        return view('backend.cv.cv');
+     }
+
+ 
+
+// public function uploadCv(Request $request)
+// {
+//     $request->validate([
+//         'resume' => 'required|file|mimes:pdf|max:1048', // Adjust file size as needed
+//     ]);
+
+//     try {
+//         $user = auth()->user();
+
+//         // Retrieve the old resume filename
+//         $oldResume = $user->cv;
+
+//         // Delete the old resume file if it exists
+//         if ($oldResume) {
+//             Storage::delete('storage/app/public/files/' . $oldResume);
+//         }
+
+//         // Store the new resume and get the filename
+//         $resumePath = $request->file('resume')->store('public/files');
+//         $resumeFilename = basename($resumePath);
+
+//         // Update the user's resume in the database
+//         $user->cv = $resumeFilename;
+//         $user->save();
+
+//         return redirect()->back()->with('success', 'Resume successfully updated.');
+//     } catch (\Exception $e) {
+//         return redirect()->back()->with('error', 'Something went wrong while uploading the file: ' . $e->getMessage());
+//     }
+// }
+
+
+public function uploadCv(Request $request)
+{
+    // Validate the uploaded file
+    $request->validate([
+        'cv' => 'required|file|mimes:pdf|max:1048',
+    ]);
+
+    $user = auth()->user(); 
+
+    if ($request->hasFile('cv')) {
+        // Create the uploads directory if it doesn't exist
+        $resumePath = $request->file('cv')->store('uploads/files', 'public'); // Store in public disk
+
+        // Retrieve the old resume filename
+        $oldResume = $user->cv; // Assuming 'cv' is the column where the filename is stored
+
+        // Delete the old resume file if it exists
+        if ($oldResume) {
+            Storage::delete('public/uploads/files/' . $oldResume); // Delete the old file
+        }
+
+        // Save only the filename in the database
+        $user->cv = basename($resumePath); 
+        $user->save(); // Save the user's updated CV information
+    }
+
+    return redirect()->back()->with('success', 'CV successfully uploaded.');
+}
+
+
+
 }
