@@ -16,6 +16,19 @@ return Application::configure(basePath: dirname(__DIR__))
             AuthMiddleware::class,
         ]);
     })
+
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->appendToGroup('jobseekers',[
+            AuthMiddleware::class,
+        ]);
+    })
+
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->appendToGroup('companies',[
+            AuthMiddleware::class,
+        ]);
+    })
+
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
