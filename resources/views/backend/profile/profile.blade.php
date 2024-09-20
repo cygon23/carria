@@ -114,7 +114,6 @@
                                 </div>
                             </div>
 
-
                             <div class="tab-pane fade profile-edit pt-3" id="profile-avator">
                               @include('layouts._messages')
                               <form action=" " method="POST" enctype="multipart/form-data">
@@ -146,8 +145,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </form>
-                            
+                            </form>                       
                           </div>
 
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
@@ -231,10 +229,7 @@
     </div>
 </div>
 
-
 </div>
-
-
 
     @endsection
 
