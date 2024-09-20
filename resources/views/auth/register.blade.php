@@ -75,6 +75,20 @@
                       @enderror
                     </div>
 
+
+                    <div class="col-12">
+                      <label for="user_type" class="form-label">Select User Type</label>
+                      <select name="user_type" class="form-control" id="user_type">
+                        <option value="">-- Select User Type --</option>
+                        <option value="job_seeker" {{ old('user_type') == 'job_seeker' ? 'selected' : '' }}>Job Seeker</option>
+                        <option value="company" {{ old('user_type') == 'company' ? 'selected' : '' }}>Company</option>
+                      </select>
+                      @error('user_type')
+                        <p class="m-0 small alert alert-danger shadow-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                    
+
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
