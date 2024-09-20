@@ -36,8 +36,8 @@
         <div class="row">
             <div class="col-xl-4">
                 <div class="card">
-                    <div class="card-body profile-card  d-flex flex-column align-items-center">
-                        <img src="{{ url('assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px;">
+                    <div class="card-body profile-card pt-2 d-flex flex-column align-items-center">
+                      <img src="{{ asset('storage/uploads/avatar/' . Auth::user()->profile_image_url) }}" alt="Avatar">
                         <h2>{{ Auth::user()->name }}</h2>
                         <h3>{{ Auth::user()->department }}</h3>
                         <div class="social-links mt-2">
@@ -116,7 +116,38 @@
 
 
                             <div class="tab-pane fade profile-edit pt-3" id="profile-avator">
-  
+                              @include('layouts._messages')
+                              <form action=" " method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="card">
+                                    <div class="card-header mb-3">
+                                        Avatar
+                                    </div>
+                                             @if (!empty(Auth::user()->profile_image_url))
+                                          <img src="{{ asset('storage/uploads/avatar/' . Auth::user()->profile_image_url) }}" style="width:100px; height:100px; border-radius:100px; object-fit:cover; margin:0px auto" class="border mb-3" alt="Avatar">
+                                          @else
+                                    <img src="https://i.pravatar.cc/150" style="width:100px; border-radius:100px; margin:0px auto" class="border mb-3" alt="Default Avatar">
+                                @endif
+
+
+                                    <div class="card-body p-0 text-center">
+                                        <input type="file" class="form-control{{ $errors->has('profile_image_url') ? ' is-invalid' : '' }}" name="profile_image_url">
+                                        <button class="btn btn-success w-100 mt-3">Update</button>
+                            
+                                        @error('profile_image_url')
+                                            <p class="m-0 small alert alert-danger shadow-sm">{{ $message }}</p> <!-- Use $message for error messages -->
+                                        @enderror
+                            
+                                        @if (Session::has('avatar'))
+                                            <div class="alert alert-success mt-3 alert-dismissible fade show" role="alert">
+                                                {{ Session::get('avatar') }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </form>
+                            
                           </div>
 
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">

@@ -68,6 +68,20 @@ class profileController extends Controller
      }
 
      public function avator(Request $request){
-       return view();
+        $request->validate([
+            'profile_image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        $user = auth()->user();
+    
+        if ($request->hasFile('profile_image_url')) {
+            // Create the uploads directory if it doesn't exist
+            $avatarPath = $request->file('profile_image_url')->store('uploads/avatar', 'public'); // Store in public disk
+    
+            $user->profile_image_url = basename($avatarPath); // Save only the filename
+            $user->save();
+        }
+    
+        return redirect()->back()->with('profile_image_url', 'Avatar updated successfully.');
      }
 }
