@@ -50,7 +50,7 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('panel/user/edit/{id}',[UserController::class, 'editUser']);
     Route::post('panel/user/edit/{id}',[UserController::class, 'updateUser']);
     Route::get('panel/user/delete/{id}',[UserController::class, 'deleteUser']);
-    Route::get('skills',[UserController::class,'userSkill']);
+   
 
 
      //url for category
@@ -96,6 +96,12 @@ Route::group(['middleware'=>'jobseekers'], function(){
      
        Route::get('job/cv',[profileController::class,'homeCv']);
        Route::post('job/cv',[profileController::class,'uploadCv']);
+
+        Route::get('job/cv/skills',[profileController::class,'userSkill']);
+        Route::post('job/cv/skills',[profileController::class,'addSkill']);
+        // Route::get('job/cv/skills',[profileController::class,'editSkill']);
+        // Route::post('job/cv/skills',[profileController::class,'updateSkill']);
+        // Route::post('job/cv/skills',[profileController::class,'deleteSkill']);
 });
 
 

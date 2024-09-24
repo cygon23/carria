@@ -156,5 +156,21 @@ public function uploadCv(Request $request)
 }
 
 
+public function userSkill(){
+    return view('backend.user.addSkills');
+}
+
+
+public function addSkill(Request $request){
+
+      // Get the currently authenticated user
+      $user = auth()->user();
+
+      $request->validate([
+        ''
+
+      ]);
+}
+
 
 }

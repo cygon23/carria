@@ -15,19 +15,25 @@
       <h5 class="card-title">Add Skills</h5>
 
       @include('layouts._messages')
-      <form class="row g-3" action="" method="post" enctype="multipart/form-data">
-        {{ csrf_field() }}
+      <form class="row g-3"  enctype="multipart/form-data">
 
-       
         <div class="col-12">
-            <label class="form-label">Category*</label>
-            <select name="category_id" class="form-control">
-                <option value="">Select Category</option>
-                {{-- @foreach ($getCategory as $category )
-                    <option value="{{$category->id}}">{{$category->title}}</option>
-                @endforeach --}}
-            </select>
-        </div>
+          <label class="form-label">Skills*</label>
+          <select name="skills" class="form-control" multiple>
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+              <option value="javascript">JavaScript</option>
+              <option value="php">PHP</option>
+              <option value="python">Python</option>
+              <option value="laravel">Laravel</option>
+              <option value="django">Django</option>
+              <option value="networking">Networking</option>
+              <option value="cybersecurity">Cybersecurity</option>
+              <option value="docker">Docker</option>
+              <!-- Add more skills as needed -->
+          </select>
+      </div>
+      
 
         
           <div class="col-12">

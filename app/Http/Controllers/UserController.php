@@ -96,9 +96,7 @@ public function updateUser(Request $request, $id)
 
 
 
- public function userSkill(){
-    return view('backend.user.skills');
-}
+ 
 
 
 

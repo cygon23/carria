@@ -11,13 +11,40 @@
       </li>
 
 
-      <li class="nav-item">
+      <li class="nav-item dropdown">
         @if(Auth::user()->user_type == 'job_seeker')
-        <a class="nav-link  @if(Request::segment(2) != 'skills') collapsed  @endif" href="{{url('skills')}}">
-          <i class="bi bi-person-gear"></i>
-          <span>Skills</span>          
+        <a class="nav-link dropdown-toggle @if(Request::segment(2) != 'skills') collapsed  @endif" href="#" id="skillsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-gear"></i>
+            <span>Skills</span>          
         </a>
-      </li>
+        <ul class="dropdown-menu" aria-labelledby="skillsDropdown">
+            <li>
+                <a class="dropdown-item" href="{{url('job/cv/skills')}}">
+                    <i class="bi bi-list-check"></i>
+                    View Skills
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="{{url('panel/user/addSkills')}}">
+                    <i class="bi bi-plus"></i>
+                    Add Skill
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="{{url('panel/user/editskill')}}">
+                    <i class="bi bi-pencil"></i>
+                    Edit Skill
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="{{url('panel/user/deleteskill')}}">
+                    <i class="bi bi-trash"></i>
+                    Delete Skill
+                </a>
+            </li>
+        </ul>
+    </li>
+    
 
       <li class="nav-item">
         <a class="nav-link  @if(Request::segment(2) != 'none') collapsed  @endif" href="{{url('')}}">
@@ -43,14 +70,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link  @if(Request::segment(2) != 'help') collapsed  @endif" href="{{url('panel/user/help')}}">
-          <i class="bi bi-question-circle"></i>
-          <span>Help</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link  @if(Request::segment(2) != 'inbox') collapsed  @endif" href="{{url('panel/inbox/list')}}">
+        <a class="nav-link  @if(Request::segment(2) != 'inbox') collapsed  @endif" href="{{url('404')}}">
           <i class="bi bi-envelope"></i>
           <span>Inbox</span>
         </a>
