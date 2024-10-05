@@ -15,37 +15,40 @@ use Validator;
 
 class AuthController extends Controller
 {
-    static  function login(){
+    static  function login()
+    {
 
         return view('auth.login');
     }
 
-    static  function register(){
+    static  function register()
+    {
 
         return view('auth.register');
     }
 
-    static  function forgot(){
+    static  function forgot()
+    {
 
         return view('auth.forgot');
     }
 
-    static  function reset($token){
+    static  function reset($token)
+    {
 
         $user = User::where('remember_token', '=', $token)->first();
         //check if user not found
-        if(!empty($user)){
+        if (!empty($user)) {
             $data['user'] = $user;
             return view('auth.reset', $data);
-        }
-         else{
+        } else {
             abort(404);
-         }
-
+        }
     }
 
 
-    public static function reset_password($token, Request $request) {
+    public static function reset_password($token, Request $request)
+    {
         // Define validation rules
         $rules = [
             'password' => 'required|string|min:8|max:20|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
@@ -58,7 +61,7 @@ class AuthController extends Controller
 
         // Check if validation fails
         if ($validator->fails()) {
-            return redirect()->back()->with('error','Passowrd must be min 8 with mixer of character');
+            return redirect()->back()->with('error', 'Passowrd must be min 8 with mixer of character');
         }
 
         $user = User::where('remember_token', '=', $token)->first();
@@ -81,36 +84,36 @@ class AuthController extends Controller
     }
 
 
-    static function forgot_password(Request $request){
+    static function forgot_password(Request $request)
+    {
         //check if email available
 
         $user = User::where('email', '=', $request->email)->first();
 
-        if(!empty($user)){
+        if (!empty($user)) {
 
             $user->remember_token = Str::random(40);
             $user->save();
 
             Mail::to($user->email)->send(new ForgotPassowrdMail($user));
-            return redirect('login')->with('success','Chack your email to resert passowrd');
-
-        }
-        else{
-            return redirect()->back()->with('error','Email not found');
+            return redirect('login')->with('success', 'Chack your email to resert passowrd');
+        } else {
+            return redirect()->back()->with('error', 'Email not found');
         }
     }
 
-    static  function create_user(Request $request){
+    static  function create_user(Request $request)
+    {
         $request->validate([
-          'name' => 'required|min:6',
-          'email' => 'required|email|unique:users',
-          'user_type' => 'required|in:job_seeker,company',
-          'password' => 'required|string|min:8|max:20|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'
+            'name' => 'required|min:6',
+            'email' => 'required|email|unique:users',
+            'user_type' => 'required|in:job_seeker,company',
+            'password' => 'required|string|min:8|max:20|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'
 
         ]);
         $save = new User;
-        $save->name =trim($request->name);
-        $save->email =trim($request->email);
+        $save->name = trim($request->name);
+        $save->email = trim($request->email);
         $save->user_type = trim($request->user_type);
         $save->password = trim(Hash::make($request->password));
         // $save->terms = trim($request->terms);
@@ -118,7 +121,7 @@ class AuthController extends Controller
         $save->save();
 
         Mail::to($save->email)->send(new RegisterMail($save));
-        return redirect('login')->with('success','your succefilly created an account and verify your email address');
+        return redirect('login')->with('success', 'your succefilly created an account and verify your email address');
     }
 
     public function verify($token)
@@ -171,62 +174,55 @@ class AuthController extends Controller
     // }
 
     public function auth_login(Request $request)
-{
-    $remember = !empty($request->remember) ? true : false;
-
-    // Attempt login
-    if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) 
     {
-        // Check if the user's email is verified
-        if (!empty(Auth::user()->email_verified_at)) 
-        {
-            // Redirect based on the user_type
-            $userType = Auth::user()->user_type;  // Assuming user_type column exists in the users table
+        $remember = !empty($request->remember) ? true : false;
 
-            switch ($userType) {
-                case 'job_seeker':
-                    return redirect('panel/dashboard');  // Job Seeker's Dashboard
-                    break;
+        // Attempt login
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
+            // Check if the user's email is verified
+            if (!empty(Auth::user()->email_verified_at)) {
+                // Redirect based on the user_type
+                $userType = Auth::user()->user_type;  // Assuming user_type column exists in the users table
 
-                case 'company':
-                    return redirect('companies/companyHome');  // Company's Dashboard
-                    break;
+                switch ($userType) {
+                    case 'job_seeker':
+                        return redirect('panel/dashboard');  // Job Seeker's Dashboard
+                        break;
 
-                case 'admin':
-                    return redirect('panel/dashboard');  // Admin's Dashboard
-                    break;
+                    case 'company':
+                        return redirect('companies/companyHome');  // Company's Dashboard
+                        break;
 
-                default:
-                    Auth::logout();  // Log the user out if user_type is invalid
-                    return redirect()->back()->with('error', 'Invalid user type');
+                    case 'admin':
+                        return redirect('panel/dashboard');  // Admin's Dashboard
+                        break;
+
+                    default:
+                        Auth::logout();  // Log the user out if user_type is invalid
+                        return redirect()->back()->with('error', 'Invalid user type');
+                }
+            } else {
+                // Handle email not verified
+                $user_id = Auth::user()->id;
+                Auth::logout();
+
+                $save = User::find($user_id);
+                $save->remember_token = Str::random(40);
+                $save->save();
+
+                // Send the verification email
+                Mail::to($save->email)->send(new RegisterMail($save));
+
+                return redirect()->back()->with('success', 'Check your email box to verify');
             }
-
         } else {
-            // Handle email not verified
-            $user_id = Auth::user()->id;
-            Auth::logout();
-
-            $save = User::find($user_id);
-            $save->remember_token = Str::random(40);
-            $save->save();
-
-            // Send the verification email
-            Mail::to($save->email)->send(new RegisterMail($save));
-
-            return redirect()->back()->with('success', 'Check your email box to verify');
+            return redirect()->back()->with('error', 'Please enter the correct email and password');
         }
-    } 
-    else 
-    {
-        return redirect()->back()->with('error', 'Please enter the correct email and password');
     }
-}
 
-    static function logout(){
+    static function logout()
+    {
         Auth::logout();
         return redirect('login');
     }
-
-
-
 }
